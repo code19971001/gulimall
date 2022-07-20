@@ -1,0 +1,39 @@
+spring:
+  datasource:
+    username: root
+    password: 19971001
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.134.151:3306/gulimall_pms
+  application:
+    name: gulimall-product
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    alicloud:
+      access-key: LTAI5tC3ZUuG35YorrCpiJEz
+      secret-key: scRzyxGDPhM4r4YABxsY9yQR204RZU
+      oss:
+        endpoint: oss-cn-hangzhou.aliyuncs.com
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss  #数据格式化，该包可以控制后端返回的时间
+  thymeleaf:
+    cache: false
+  redis:
+    host: 192.168.134.151
+    port: 6379
+
+# *的意思是扫描的位置包含我的引入的jar包，如果不写就是只扫描自己的
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-value: 1 #逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 #逻辑未删除值(默认为 0)
+server:
+  port: 24000
+#mapper-locations: classpath*:/mapper/**/*.xml
+logging:
+  level:
+    com.it.gulimall: debug

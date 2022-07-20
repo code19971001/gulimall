@@ -1,0 +1,148 @@
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "skuTitle": "一加"
+          }
+        }
+      ],
+      "filter": [
+        {
+          "term": {
+            "catalogId": "225"
+          }
+        },
+        {
+          "terms": {
+            "brandId": [
+              "8",
+              "9"
+            ]
+          }
+        },
+        {
+          "nested": {
+            "path": "attrs",
+            "query": {
+              "bool": {
+                "must": [
+                  {
+                    "term": {
+                      "attrs.attrId": {
+                        "value": "10"
+                      }
+                    }
+                  },
+                  {
+                    "terms": {
+                      "attrs.attrValue": [
+                        "高通888",
+                        "麒麟980"
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "term": {
+            "hasStock": {
+              "value": "false"
+            }
+          }
+        },
+        {
+          "range": {
+            "skuPrice": {
+              "gte": 5000,
+              "lte": 5500
+            }
+          }
+        }
+      ]
+    }
+  },
+  "sort": [
+    {
+      "skuPrice": {
+        "order": "desc"
+      }
+    }
+  ],
+  "from": 2,
+  "size": 1,
+  "highlight": {
+    "fields": {
+      "skuTitle": {}
+    },
+    "pre_tags": "<b style='color:red'>",
+    "post_tags": "</b>"
+  },
+  "aggs": {
+    "brand_agg": {
+      "terms": {
+        "field": "brandId",
+        "size": 100
+      },
+      "aggs": {
+        "brand_name_agg": {
+          "terms": {
+            "field": "brandName",
+            "size": 100
+          }
+        },
+        "brand_img_agg": {
+          "terms": {
+            "field": "brandImg",
+            "size": 10
+          }
+        }
+      }
+    },
+    "catalog_agg": {
+      "terms": {
+        "field": "catalogId",
+        "size": 100
+      },
+      "aggs": {
+        "catalog_name_agg": {
+          "terms": {
+            "field": "catalogName",
+            "size": 100
+          }
+        }
+      }
+    },
+    "attr_agg": {
+      "nested": {
+        "path": "attrs"
+      },
+      "aggs": {
+        "attr_id_agg": {
+          "terms": {
+            "field": "attrs.attrId",
+            "size": 10
+          },
+          "aggs": {
+            "attr_name_agg": {
+              "terms": {
+                "field": "attrs.attrName",
+                "size": 10
+              }
+            },
+            "attr_value_agg": {
+              "terms": {
+                "field": "attrs.attrValue",
+                "size": 10
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

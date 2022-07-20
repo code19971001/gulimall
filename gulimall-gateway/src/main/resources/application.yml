@@ -1,0 +1,74 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: ware_route
+          uri: lb://gulimall-ware
+          predicates:
+            - Path=/api/ware/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+        - id: order_route
+          uri: lb://gulimall-order
+          predicates:
+            - Path=/api/order/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+        - id: member_route
+          uri: lb://gulimall-member
+          predicates:
+            - Path=/api/member/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+        - id: product_route  #商品相关的路由
+          uri: lb://gulimall-product
+          predicates:
+            - Path=/api/product/**,/hello
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}  #路径重写:/api/product/category==>/product/category
+        - id: third_party_route
+          uri: lb://gulimall-third-party
+          predicates:
+            - Path=/api/thirdparty/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}  #路径重写:/api/product/category==>/product/category
+        - id: coupon_route
+          uri: lb://gulimall-coupon
+          predicates:
+            - Path=/api/coupon/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+        - id: admin_route  #admin后台相关的路由
+          uri: lb://renren-fast
+          predicates:
+            - Path=/api/** #api开头的到这里，注意这些路由的顺序，将精确的路由放到上面，将低优先级的路由放到下面
+          filters:
+            - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}  #路径重写:/api/category==>/renren-fast/category
+        - id: gulimall_product_route  #admin后台相关的路由
+          uri: lb://gulimall-product
+          predicates:
+            - Host=gulimall.com,item.gulimall.com
+        - id: gulimall_search_route  #admin后台相关的路由
+          uri: lb://gulimall-search
+          predicates:
+            - Host=search.gulimall.com
+        - id: gulimall_auth_route  #admin后台相关的路由
+          uri: lb://gulimall-auth-server
+          predicates:
+            - Host=auth.gulimall.com
+        - id: gulimall_cart_route  #admin后台相关的路由
+          uri: lb://gulimall-cart
+          predicates:
+            - Host=cart.gulimall.com
+        - id: gulimall_order_route  #admin后台相关的路由
+          uri: lb://gulimall-order
+          predicates:
+            - Host=order.gulimall.com
+        - id: gulimall_member_route  #admin后台相关的路由
+          uri: lb://gulimall-member
+          predicates:
+            - Host=member.gulimall.com
+        - id: gulimall_seckill_route  #admin后台相关的路由
+          uri: lb://gulimall-seckill
+          predicates:
+            - Host=seckill.gulimall.com

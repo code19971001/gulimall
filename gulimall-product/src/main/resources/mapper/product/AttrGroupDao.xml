@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.it.gulimall.product.dao.AttrGroupDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.it.gulimall.product.entity.AttrGroupEntity" id="attrGroupMap">
+        <result property="attrGroupId" column="attr_group_id"/>
+        <result property="attrGroupName" column="attr_group_name"/>
+        <result property="sort" column="sort"/>
+        <result property="descript" column="descript"/>
+        <result property="icon" column="icon"/>
+        <result property="catelogId" column="catelog_id"/>
+    </resultMap>
+    <resultMap id="SpuItemAttrGroupVo" type="com.it.gulimall.product.vo.SpuItemAttrGroupVo">
+        <result property="groupName" column="attrGroupName"/>
+        <collection property="spuItemBaseAttrs" ofType="com.it.gulimall.product.vo.SpuItemBaseAttrVo">
+            <result property="attrName" column="attrName"/>
+            <result property="attrValue" column="attrValue"/>
+        </collection>
+    </resultMap>
+    <select id="getAttrGroupWithAttrsBySpuId"
+            resultMap="SpuItemAttrGroupVo">
+        SELECT attr_value.spu_id          AS spuId,
+               attr_group.attr_group_id   AS attrGoupId,
+               attr_group.attr_group_name AS attrGroupName,
+               attr_value.attr_id         AS attrId,
+               attr_value.attr_name       AS attrName,
+               attr_value.attr_value      AS attrValue
+        FROM gulimall_pms.pms_attr_group attr_group
+                 LEFT JOIN gulimall_pms.pms_attr_attrgroup_relation relation
+                           ON attr_group.attr_group_id = relation.attr_group_id
+                 LEFT JOIN gulimall_pms.pms_attr attr ON relation.attr_id = attr.attr_id
+                 LEFT JOIN gulimall_pms.pms_product_attr_value attr_value ON attr.attr_id = attr_value.attr_id
+        WHERE attr_group.catelog_id = #{catalogId}
+          AND attr_value.spu_id = #{spuId};
+
+    </select>
+
+
+</mapper>

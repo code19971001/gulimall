@@ -1,0 +1,74 @@
+package com.it.gulimall.ware;
+
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.core.RabbitMessagingTemplate;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+@Slf4j
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class GulimallWareApplicationTests {
+
+
+    /**
+     * RabbitTemplate  、AmqpAdmin 、 RabbitMessagingTemplate  、 CachingConnectionFactory
+     * <p>
+     * 接收消息
+     *
+     * @RabbitListener 类+方法  监听队列
+     * @RabbitHandler 方法     可以区别   消息的类型
+     */
+    @Autowired
+    AmqpAdmin amqpAdmin;
+
+    @Test
+    public void testExchange() {
+//String name, boolean durable, boolean autoDelete, Map<String, Object> arguments
+        DirectExchange directExchange = new DirectExchange("hello-java-exchange", true, false);
+        amqpAdmin.declareExchange(directExchange);
+        log.info("交换机创建成功");
+    }
+
+
+    @Test
+    public void testQueue() {
+//    String name, boolean durable, boolean exclusive, boolean autoDelete, @Nullable Map<String, Object> arguments
+
+        Queue queue = new Queue("hello-java-queue", true, false, false);
+        amqpAdmin.declareQueue(queue);
+        log.info("交换机创建成功");
+    }
+
+    @Test
+    public void testBinding() {
+//        (String destination, Binding.DestinationType destinationType, String exchange, String routingKey, @Nullable Map<String, Object> arguments) {
+        Binding binding = new Binding("hello-java-queue", Binding.DestinationType.QUEUE, "hello-java-exchange", "hello.java", null);
+        amqpAdmin.declareBinding(binding);
+        log.info("declareBinding创建成功");
+    }
+
+
+    @Autowired
+    RabbitMessagingTemplate messagingTemplate;
+    @Autowired
+    RabbitTemplate rabbitTemplate ;
+
+
+    @Test
+    public void testReceiveMsg() {
+        String s = messagingTemplate.receiveAndConvert("hello-java-queue", String.class);
+        System.out.println(s);
+
+    }
+
+
+}
