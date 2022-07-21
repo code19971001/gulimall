@@ -1,21 +1,22 @@
-#spring:
-#  datasource:
-#    username: root
-#    password: 19971001
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://192.168.134.151:3306/gulimall_sms
-#  cloud:
-#    nacos:
-#      discovery:
-#        server-addr: 127.0.0.1:8848
-#  application:
-#    name: gulimall-coupon
-## *的意思是扫描的位置包含我的引入的jar包，如果不写就是只扫描自己的
-#mybatis-plus:
-#  mapper-locations: classpath:/mapper/**/*.xml
-#  global-config:
-#    db-config:
-#      id-type: auto
-#server:
-#  port: 21000
-##mapper-locations: classpath*:/mapper/**/*.xml
+## 实际上.文件中配置实际上已经配置到了配置中.
+spring:
+  datasource:
+    username: root
+    password: 19971001
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.134.151:3306/gulimall_sms
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  application:
+    name: gulimall-coupon
+# *的意思是扫描的位置包含我的引入的jar包，如果不写就是只扫描自己的
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  global-config:
+    db-config:
+      id-type: auto
+server:
+  port: 21000
+#mapper-locations: classpath*:/mapper/**/*.xml

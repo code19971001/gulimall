@@ -52,6 +52,12 @@
             <groupId>com.it.gulimall</groupId>
             <artifactId>gulimall-third-party</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.alibaba.cloud</groupId>
+                    <artifactId>spring-cloud-starter-alicloud-oss</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>

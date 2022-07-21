@@ -10,11 +10,6 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
-    alicloud:
-      access-key: xxx
-      secret-key: xxx
-      oss:
-        endpoint: oss-cn-hangzhou.aliyuncs.com
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss  #数据格式化，该包可以控制后端返回的时间
   thymeleaf:
@@ -29,7 +24,7 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
-      logic-delete-value: 1 #逻辑已删除值(默认为 1)
+      logic-delete-value: 1 #开启逻辑删除功能，所有的删除操作都变更为update逻辑已删除值(默认为 1)
       logic-not-delete-value: 0 #逻辑未删除值(默认为 0)
 server:
   port: 24000

@@ -3,19 +3,7 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
-    alicloud:
-      access-key: LTAI5tC3ZUuG35YorrCpiJEz
-      secret-key: scRzyxGDPhM4r4YABxsY9yQR204RZU
-      oss:
-        endpoint: oss-cn-hangzhou.aliyuncs.com
-        bucket: code1997-gulimall
-      mysms:
-        host: https://aliapi.market.alicloudapi.com
-        path: /smsApi/verifyCode/send
-        templateId: 540
-        appCode: 879ee4ad5f674ff6bab23df3cee8f646
   application:
     name: gulimall-third-party
 server:
   port: 30000
-

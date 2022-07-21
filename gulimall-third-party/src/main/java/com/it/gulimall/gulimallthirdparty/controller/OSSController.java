@@ -5,11 +5,13 @@ import com.aliyun.oss.common.utils.BinaryUtil;
 import com.aliyun.oss.model.MatchMode;
 import com.aliyun.oss.model.PolicyConditions;
 import com.it.common.utils.R;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -18,11 +20,13 @@ import java.util.Map;
 /**
  * OSS：制作签名
  * 前端向后端服务器要签名，然后前端根据签名和图片和阿里云oss进行交互，上传图片，以此来降低后端服务器的压力。
+ *
  * @author : code1997
  * @date : 2021/5/3 13:53
  */
 @RestController
 @RequestMapping("thirdparty")
+@Slf4j
 public class OSSController {
 
     @Autowired
@@ -57,7 +61,7 @@ public class OSSController {
             policyConds.addConditionItem(MatchMode.StartWith, PolicyConditions.COND_KEY, dir);
 
             String postPolicy = ossClient.generatePostPolicy(expiration, policyConds);
-            byte[] binaryData = postPolicy.getBytes("utf-8");
+            byte[] binaryData = postPolicy.getBytes(StandardCharsets.UTF_8);
             String encodedPolicy = BinaryUtil.toBase64String(binaryData);
             String postSignature = ossClient.calculatePostSignature(postPolicy);
 
@@ -68,9 +72,8 @@ public class OSSController {
             respMap.put("dir", dir);
             respMap.put("host", host);
             respMap.put("expire", String.valueOf(expireEndTime / 1000));
-            // respMap.put("expire", formatISO8601Date(expiration));
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error("###### update file to oss failure!", e);
         } finally {
             ossClient.shutdown();
         }

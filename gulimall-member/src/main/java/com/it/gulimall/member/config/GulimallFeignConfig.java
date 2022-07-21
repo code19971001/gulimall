@@ -24,7 +24,7 @@ public class GulimallFeignConfig {
     @Bean
     public RequestInterceptor requestInterceptor() {
 
-        return (requestTemplate) -> {
+        return requestTemplate -> {
             log.info(LoggerConstant.LOGGER_PREFIX + "feign正在进行Request的构造");
             //本质是使用ThreadLocal将请求的信息保存下来，以供其他的类来使用。
             ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();

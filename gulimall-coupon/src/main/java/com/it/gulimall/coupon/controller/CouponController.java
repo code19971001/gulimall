@@ -1,26 +1,21 @@
 package com.it.gulimall.coupon.controller;
 
+import com.it.common.utils.PageUtils;
+import com.it.common.utils.R;
+import com.it.gulimall.coupon.entity.CouponEntity;
+import com.it.gulimall.coupon.service.CouponService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.it.gulimall.coupon.entity.CouponEntity;
-import com.it.gulimall.coupon.service.CouponService;
-import com.it.common.utils.PageUtils;
-import com.it.common.utils.R;
-
 
 /**
- * RefreshScope: 可以动态获取并刷新配置信息中的值,如果配置中和当前应用中配置了相同的选择项，优先使用配置中的选项
+ * RefreshScope: 可以动态获取并刷新nacos中配置信息中的值,如果配置中和当前应用中配置了相同的选择项，优先使用配置中的选项
  *
  * @author code1997
  * @email p15194420545@gmail.com

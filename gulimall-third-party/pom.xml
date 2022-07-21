@@ -53,7 +53,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!--springcloud alibaba的oss服务-->
+        <!--spring cloud alibaba的oss服务-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alicloud-oss</artifactId>

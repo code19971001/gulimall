@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Objects;
 
 
 /**
@@ -62,7 +63,7 @@ public class MemberController {
         memberEntity.setNickname("张三");
         R r = couponFeignService.memberCoupons();
         Object coupons = r.get("coupons");
-        return R.ok().put("member", memberEntity).put("coupons", coupons);
+        return Objects.requireNonNull(R.ok().put("member", memberEntity)).put("coupons", coupons);
 
     }
 
