@@ -63,7 +63,7 @@
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
-            <!--打包的时候不打包-->
+            <!--tomcat容器中存在这些包，因此打包的时候不需要打包到jar中-->
             <scope>provided</scope>
         </dependency>
 
@@ -93,7 +93,7 @@
     </dependencies>
 
     <dependencyManagement>
-        <!--当我们导入spring cloud Alibaba的组建的时候就不需要写版本号了-->
+        <!--当我们导入spring cloud Alibaba的组件的时候就不需要写版本号了，全部交给spring-cloud-alibaba帮助我们做依赖管理-->
         <dependencies>
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
